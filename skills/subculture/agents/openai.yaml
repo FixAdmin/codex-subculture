@@ -1,0 +1,4 @@
+interface:
+  display_name: "AIW Subculture Orchestrator"
+  short_description: "Coordinate user-visible Codex implementation threads"
+  default_prompt: "Use $subculture to orchestrate this task through separate user-visible Codex threads, never internal subagents."
