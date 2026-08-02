@@ -114,8 +114,8 @@ skills/subculture/
 ```
 
 `SKILL.md` contains the orchestration protocol. The bundled reference contains the complete
-implementation-contract authoring rules and terminal report format. It is not a second skill and
-cannot drift to a different installed version.
+implementation-contract authoring rules and terminal report format. It is installed and versioned
+with this skill, not as a separate skill.
 
 ## Validate
 
