@@ -256,7 +256,7 @@ ACCEPTANCE EVIDENCE: <AC -> command/result or runtime/artifact evidence>
 CHECKS RUN: <exact commands and results>
 SCOPE/RESPONSIBILITY: <confirm boundaries and explain necessary adjacent changes or deviations>
 UNRESOLVED: <none, or precise risks/gaps>
-CURATOR ACTION: Independently verify and accept, request focused rework, or escalate in <main-thread link>
+CURATOR ACTION: Independently verify, then accept, make a bounded curator correction, request focused rework, or escalate in <main-thread link>
 ```
 
 ### Curator verification
@@ -287,9 +287,10 @@ The curator must perform the final verification after receiving a terminal repor
 7. Issue one verdict: `ACCEPTED`, `FOCUSED_REWORK`, `REJECTED`, or `BLOCKED`; repeat the relevant
    checks after any rework.
 
-The curator may send a focused rework brief containing only the failed criteria and evidence. The
-worker's test results are reusable evidence, while final acceptance still requires the curator to
-inspect the implementation code and its product logic.
+The curator may make a bounded correction itself under the main skill's ownership rule or send a
+focused rework brief containing only the failed criteria and evidence. The worker's test results are
+reusable evidence, while final acceptance still requires the curator to inspect the implementation
+code and its product logic.
 
 ## Output discipline
 

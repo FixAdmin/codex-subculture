@@ -59,15 +59,23 @@ dispatching work.
 7. Dispatch the independent frontier. Do not make the child threads send acknowledgements,
    progress updates, phase summaries, or “still working” messages.
 8. After all prompts for the current frontier have been sent, end the active orchestration turn and
-   go fully offline to conserve tokens: do not poll, re-check, or generate follow-up work. Resume
-   only when a child thread or the user explicitly alerts the main thread.
+   go fully offline to conserve tokens: do not poll, re-check, or generate follow-up work. Never
+   call `wait_threads` or an equivalent wait/status-monitoring tool merely to keep the curator turn
+   alive or watch worker progress. Use `wait_threads` only when the user explicitly requests active
+   monitoring in the current turn, or when a concrete time-sensitive coordination condition cannot
+   be satisfied through the worker's required blocker/terminal alert. State that exact reason before
+   waiting, make one bounded call, and end the turn on timeout; never chain or loop waits. A large
+   context, cache-warmth concerns, long worker runtime, curiosity, progress checking, or convenience
+   are not valid reasons. Otherwise resume only when a child thread or the user explicitly alerts
+   the main thread.
 9. When alerted, answer only the necessary decision or missing-context question, dispatch the next
    dependency frontier when its prerequisites are complete, and keep the same terminal-report rule.
 10. When a child reports a result in the main thread, independently verify it as curator. A child
    owns its paths until it delivers its terminal status there; only then does write authority
    transfer to the curator for integration corrections. Return material implementation defects to
-   the original owner with a focused rework contract. Continue until the whole original request
-   reaches its final completion boundary.
+   the original owner with a focused rework contract, but make small, localized, low-risk corrections
+   directly when another worker cycle would cost more than the correction. Continue until the whole
+   original request reaches its final completion boundary.
 
 ## Child-thread communication rule
 
@@ -103,9 +111,23 @@ After each terminal child result, and before declaring the overall task complete
    the criterion.
 4. Check for scope drift, hidden placeholders, broken interfaces, unauthorized writes, and
    unreported risks.
-5. Issue a child-level curator verdict: `ACCEPTED`, `FOCUSED_REWORK`, `REJECTED`, or `BLOCKED`.
-6. Send focused rework instructions only for failed criteria, then repeat verification.
+5. Choose the correction owner using the rule below before issuing a verdict.
+6. After any correction or rework, repeat only the verification relevant to the changed surface,
+   then issue `ACCEPTED`, `FOCUSED_REWORK`, `REJECTED`, or `BLOCKED`.
 7. Own final integration, cross-thread conflict resolution, and the final user-facing result.
+
+Before issuing `FOCUSED_REWORK`, decide whether another worker cycle is proportionate:
+
+- Return the work to its original owner when the correction is material: it changes architecture,
+  product logic, a public contract, security-sensitive behavior, or a broad implementation surface;
+  requires a new design decision; or invalidates substantial worker evidence.
+- Make a bounded curator correction directly when it is small, localized, low-risk, consistent with
+  the locked plan, and can be established by direct inspection plus a focused check. Inspect the
+  curator's own diff and record its evidence before acceptance. Do not use this path to absorb
+  substantially unfinished worker scope.
+- Do not send a worker through repeated cycles for cleanup-sized issues. After each rework handoff,
+  reassess ownership. If only bounded corrections remain, finish and verify them as curator. If
+  material defects persist, reject, block, or escalate instead of continuing an open-ended loop.
 
 Never treat a child's self-review, green command, screenshot of a command, or confident summary as
 final proof. The main thread is the only acceptance authority in this mode.
