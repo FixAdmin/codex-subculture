@@ -136,4 +136,5 @@ the retired standalone brief dependency.
 
 ## License
 
-This project is released under the [MIT License](LICENSE).
+This project is released under the [MIT License](LICENSE). The same license is included in the
+installed skill package at `skills/subculture/LICENSE.txt`.
