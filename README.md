@@ -1,13 +1,29 @@
 # codex-subculture
 
-![Sol coordinating separate Luna worker threads](assets/codex-subculture-hero.png)
+![Sol bridging the user to separate Luna Max implementation threads](assets/codex-subculture-hero.png)
 
-I use Codex Subculture to keep Sol in charge of architecture and quality while routing bounded
-implementation work to Luna Max in separate, user-visible Codex tasks. It is a Sol-mediated
-mixed-model workflow, not a native subagent loop.
+I use Codex Subculture as a Sol bridge between me and Luna Max. I stay in a normal Sol thread. When
+I activate the protocol, Sol inspects the project, decides the architecture, creates a **new,
+first-class Luna Max thread**, and gives it a complete implementation contract. Sol then ends its
+turn. Luna signals the Sol thread only when blocked or ready for verification, and Sol returns to
+inspect and integrate the result.
+
+This is thread orchestration, not a native subagent loop. The Luna worker has its own `threadId`,
+visible history, and separate entry in the Codex task list.
 
 The protocol activates only when the user gives the exact standalone instruction `SUBCULTURE`.
 Mentioning, reviewing, or translating the word does not activate it.
+
+## How the bridge works
+
+1. I describe the task in a normal Sol thread and activate `SUBCULTURE`.
+2. Sol inspects the project and owns the architecture, plan, and material technical decisions.
+3. Sol creates a new user-visible Luna Max thread and sends one self-contained implementation
+   contract with locked decisions, scope, acceptance evidence, and the main-thread handoff target.
+4. Sol ends its active turn and stays offline. Luna works in its own thread and contacts Sol only
+   for a real blocker or a terminal handoff.
+5. Sol returns on that signal, independently verifies the implementation, handles bounded
+   integration corrections, and accepts the result or requests material rework.
 
 ## Why I use it
 
@@ -15,6 +31,11 @@ I prefer Sol for architecture, ambiguous decomposition, integration, and final a
 experience, Luna is not reliable enough to own those decisions without strict mediation. I use this
 protocol to have Sol inspect the project, lock the plan, write complete worker contracts, resolve
 blockers, and verify every terminal handoff. Luna Max receives only bounded implementation work.
+
+The design goal is to approach the implementation quality I expect from Sol without spending Sol
+tokens on the entire implementation. Sol spends its budget on architecture, the worker contract,
+decisions, and verification; Luna Max spends the larger execution budget. This is a workflow goal,
+not a measured quality guarantee.
 
 The intended token shift looks like this:
 
@@ -32,6 +53,13 @@ verification can make delivery substantially slower than direct single-agent exe
 I also avoid the native Codex subagent lifecycle for this workflow. Subculture requires first-class
 Codex tasks with their own `threadId`, visible history, and direct curator handoff. It never
 substitutes workers that exist only inside a `Subagents` panel.
+
+## Long-running Sol threads
+
+After a long Luna run, a large Sol thread may resume without a useful warm-cache hit and can be
+expensive to reload. When its context window has grown substantially, I may manually compact the
+Sol thread before verification. Compaction is optional, and its summary must preserve the locked
+architecture, ownership map, worker status, acceptance criteria, and unresolved risks.
 
 ## Requirements
 
@@ -85,19 +113,6 @@ cp -R skills/subculture "${CODEX_HOME:-$HOME/.codex}/skills/subculture"
 
 These commands assume that the destination does not already exist. For development, you may link
 the destination to this checkout so edits take effect without another copy.
-
-## Protocol
-
-1. The Sol main task inspects the project and owns the architecture and implementation plan.
-2. It creates only the minimum independent frontier of separate, user-visible Luna Max tasks.
-3. Before creating each task, it reads the bundled implementation-brief contract and writes one
-   self-contained first message.
-4. Workers stay silent during normal progress. They contact the curator only for a real blocker or
-   a terminal handoff.
-5. Every terminal report must reach the main task. A report left only in a worker task is a protocol
-   violation and does not transfer ownership.
-6. The curator inspects the implementation, integrates accepted work, and performs the final
-   evidence-based risk check.
 
 ## Repository layout
 
