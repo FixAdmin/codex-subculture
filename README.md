@@ -19,9 +19,9 @@ blockers, and verify every terminal handoff. Luna Max receives only bounded impl
 The intended token shift looks like this:
 
 | Workflow | Illustrative token allocation |
-| --- | ---: |
+| --- | --- |
 | Sol-only baseline | approximately 100 million Sol tokens |
-| Subculture target | approximately 50 million Sol tokens and 80 million Luna tokens |
+| Subculture target | approximately 50 million Sol tokens and 80+ million Luna tokens |
 
 These figures are a planning scenario, not a measured benchmark, fixed ratio, or guarantee. The
 goal is to reduce Sol execution while retaining Sol control over quality-critical decisions.
@@ -107,6 +107,6 @@ the retired standalone brief dependency.
   architecture and final acceptance stay with Sol.
 - The exact activation word is `SUBCULTURE`.
 
-## Access and license
+## License
 
-This is a private project. No external reuse or redistribution license has been granted.
+No license has been selected yet. Choose one before making the repository public.
