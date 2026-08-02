@@ -43,6 +43,33 @@ substitutes workers that exist only inside a `Subagents` panel.
 The protocol does not support CLI-only environments that cannot create user-visible tasks. It
 never falls back to internal `spawn_agent`, agent-team, or subagent mechanisms.
 
+## Install from GitHub
+
+The standard Codex skill installer can install this repository directly. It copies only the
+`subculture` skill into your normal Codex skills directory.
+
+PowerShell:
+
+```powershell
+$codexHome = if ($env:CODEX_HOME) { $env:CODEX_HOME } else { Join-Path $HOME ".codex" }
+$installer = Join-Path $codexHome "skills/.system/skill-installer/scripts/install-skill-from-github.py"
+python $installer --repo FixAdmin/codex-subculture --path skills/subculture
+```
+
+macOS or Linux:
+
+```bash
+CODEX_HOME="${CODEX_HOME:-$HOME/.codex}"
+python3 "$CODEX_HOME/skills/.system/skill-installer/scripts/install-skill-from-github.py" \
+  --repo FixAdmin/codex-subculture \
+  --path skills/subculture
+```
+
+The repository is currently private, so the installer needs an existing GitHub credential or
+token with access to it. Once the repository is public, the same commands work without private
+repository authentication. The installer refuses to overwrite an existing `subculture` directory;
+remove or rename the old installation before reinstalling.
+
 ## Install from a local checkout
 
 Copy `skills/subculture` into your Codex skills directory.
@@ -109,4 +136,4 @@ the retired standalone brief dependency.
 
 ## License
 
-No license has been selected yet. Choose one before making the repository public.
+This project is released under the [MIT License](LICENSE).
