@@ -94,9 +94,6 @@ for path in ROOT.rglob("*"):
     content = path.read_text(encoding="utf-8")
     if re.search(r"[\u0400-\u04ff]", content):
         fail(f"Cyrillic text is not allowed: {path.relative_to(ROOT)}")
-    retired_name = "aiw" + "-codex-subculture"
-    if retired_name in content.casefold():
-        fail(f"retired repository name found: {path.relative_to(ROOT)}")
 
 for target in re.findall(r"\[[^\]]+\]\(([^)]+)\)", skill):
     if target.startswith(("http://", "https://", "#")):

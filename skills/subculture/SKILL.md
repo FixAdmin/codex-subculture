@@ -1,9 +1,9 @@
 ---
 name: subculture
-description: AIW's Sol-mediated orchestration protocol for parallel, first-class, user-visible Codex threads created with the app-level create_thread capability in the current project, never through internal subagents. Sol owns architecture, integration, and acceptance while Luna Max handles bounded implementation work. Activate only when the user explicitly invokes the exact standalone code word SUBCULTURE as an execution mode, not when merely quoting, discussing, translating, or reviewing it. The bundled references/implementation-brief.md contract is mandatory before every child-thread dispatch.
+description: Sol-mediated orchestration for parallel, first-class, user-visible Codex threads created with the app-level create_thread capability in the current project, never through internal subagents. Sol owns architecture, integration, and acceptance while Luna Max handles bounded implementation work. Activate only when the user explicitly invokes the exact standalone code word SUBCULTURE as an execution mode, not when merely quoting, discussing, translating, or reviewing it. The bundled references/implementation-brief.md contract is mandatory before every child-thread dispatch.
 ---
 
-# AIW SUBCULTURE
+# SUBCULTURE
 
 Use this skill only when the user explicitly activates the exact standalone code word
 **SUBCULTURE** as an instruction to execute project work. Mentioning the word while asking about,

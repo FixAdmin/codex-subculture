@@ -1,19 +1,20 @@
 # codex-subculture
 
-AIW Codex Subculture keeps Sol in charge of architecture and quality while routing bounded
+![Sol coordinating separate Luna worker threads](assets/codex-subculture-hero.png)
+
+I use Codex Subculture to keep Sol in charge of architecture and quality while routing bounded
 implementation work to Luna Max in separate, user-visible Codex tasks. It is a Sol-mediated
 mixed-model workflow, not a native subagent loop.
 
 The protocol activates only when the user gives the exact standalone instruction `SUBCULTURE`.
 Mentioning, reviewing, or translating the word does not activate it.
 
-## Why AIW uses it
+## Why I use it
 
-AIW prefers Sol for architecture, ambiguous decomposition, integration, and final acceptance. In
-our experience, Luna is not reliable enough to own those decisions without strict mediation. This
-protocol compensates by having Sol inspect the project, lock the plan, write complete worker
-contracts, resolve blockers, and verify every terminal handoff. Luna Max receives only bounded
-implementation work.
+I prefer Sol for architecture, ambiguous decomposition, integration, and final acceptance. In my
+experience, Luna is not reliable enough to own those decisions without strict mediation. I use this
+protocol to have Sol inspect the project, lock the plan, write complete worker contracts, resolve
+blockers, and verify every terminal handoff. Luna Max receives only bounded implementation work.
 
 The intended token shift looks like this:
 
@@ -28,9 +29,9 @@ goal is to reduce Sol execution while retaining Sol control over quality-critica
 That control costs time. Complete contracts, separate task handoffs, code inspection, and stricter
 verification can make delivery substantially slower than direct single-agent execution.
 
-AIW also rejects the native Codex subagent lifecycle for this workflow. Subculture requires
-first-class Codex tasks with their own `threadId`, visible history, and direct curator handoff. It
-never substitutes workers that exist only inside a `Subagents` panel.
+I also avoid the native Codex subagent lifecycle for this workflow. Subculture requires first-class
+Codex tasks with their own `threadId`, visible history, and direct curator handoff. It never
+substitutes workers that exist only inside a `Subagents` panel.
 
 ## Requirements
 
@@ -108,4 +109,4 @@ the retired standalone brief dependency.
 
 ## Access and license
 
-This is an AIW private project. No external reuse or redistribution license has been granted.
+This is a private project. No external reuse or redistribution license has been granted.
