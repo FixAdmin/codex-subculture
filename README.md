@@ -65,10 +65,7 @@ python3 "$CODEX_HOME/skills/.system/skill-installer/scripts/install-skill-from-g
   --path skills/subculture
 ```
 
-The repository is currently private, so the installer needs an existing GitHub credential or
-token with access to it. Once the repository is public, the same commands work without private
-repository authentication. The installer refuses to overwrite an existing `subculture` directory;
-remove or rename the old installation before reinstalling.
+If a `subculture` directory already exists, the installer will stop instead of overwriting it. Rename or remove the existing installation before reinstalling.
 
 ## Install from a local checkout
 
@@ -138,3 +135,4 @@ the retired standalone brief dependency.
 
 This project is released under the [MIT License](LICENSE). The same license is included in the
 installed skill package at `skills/subculture/LICENSE.txt`.
+
