@@ -25,6 +25,14 @@ Mentioning, reviewing, or translating the word does not activate it.
 5. Sol returns on that signal, independently verifies the implementation, handles bounded
    integration corrections, and accepts the result or requests material rework.
 
+## Example implementation brief
+
+Sol does not send Luna a short task summary. It sends one self-contained implementation contract
+with project grounding, locked decisions, responsibility boundaries, acceptance criteria,
+communication rules, and the required terminal handoff.
+
+[Read a complete implementation brief from an AIWORLDING Character Editor backend task](docs/example-implementation-brief.md).
+
 ## Why I use it
 
 I prefer Sol for architecture, ambiguous decomposition, integration, and final acceptance. In my
