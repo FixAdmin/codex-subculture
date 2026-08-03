@@ -113,8 +113,10 @@ After each terminal child result, and before declaring the overall task complete
    unreported risks.
 5. Choose the correction owner using the rule below before issuing a verdict.
 6. After any correction or rework, repeat only the verification relevant to the changed surface,
-   then issue `ACCEPTED`, `FOCUSED_REWORK`, `REJECTED`, or `BLOCKED`.
+   then record `ACCEPTED`, `FOCUSED_REWORK`, `REJECTED`, or `BLOCKED` in the main thread.
 7. Own final integration, cross-thread conflict resolution, and the final user-facing result.
+
+Message a child thread only if a response is expected; never acknowledge a completed child.
 
 Before issuing `FOCUSED_REWORK`, decide whether another worker cycle is proportionate:
 
