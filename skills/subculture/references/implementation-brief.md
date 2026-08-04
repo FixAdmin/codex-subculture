@@ -126,8 +126,7 @@ If another task owns an overlapping surface, mark the dependency and do not auth
 edits there. The agent must contact the curator before changing another active owner's area, a
 shared public contract, schema, migration, lockfile, manifest, production state, external system,
 or making a destructive or irreversible change. Same-project execution does not remove write
-conflicts. Do not authorize opportunistic refactors, repository-wide formatting, unrelated cleanup,
-or commits unless the contract explicitly assigns them.
+conflicts. Do not authorize opportunistic refactors, repository-wide formatting, or unrelated cleanup.
 
 ### Inputs and locked decisions
 
@@ -226,9 +225,12 @@ This is a terminal-communication contract:
   result is ready.
 - Use the supplied curator thread link for both cases. Do not report completion only in a child
   thread, a local log, or an unrelated channel.
-- Delivering the terminal report to the supplied main/curator thread is mandatory. Finishing the
-  implementation without sending it there is a protocol violation and does not constitute a valid
-  handoff to the curator.
+- When the terminal result is ready, call `send_message_to_thread` with the supplied main/curator
+  thread as its target and the complete terminal report as its message. Confirm the tool call
+  succeeds before ending the task. Delivering the report by any other means—including only in this
+  child thread or as a link for the curator—is not a handoff.
+- Finishing the implementation without a successful `send_message_to_thread` delivery is a protocol
+  violation and does not constitute a valid handoff to the curator.
 - Do not declare the work accepted, merged, complete for the whole project, or safe to ship. The
   curator owns those judgments.
 

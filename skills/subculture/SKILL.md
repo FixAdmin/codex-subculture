@@ -85,14 +85,15 @@ The child thread may write to the main thread only in these cases:
 - it cannot proceed because of a concrete capability, dependency, or environment blocker;
 - it has reached a terminal result and is ready for curator verification.
 
-All other work stays silent in the child thread. At a terminal result, the child is obligated to send
-its terminal report directly to its curator in the actual main thread named in the contract. Writing
-the report only in the child thread, leaving the result in a local log, or finishing without sending
-the report to the main thread is a protocol violation: no valid handoff has occurred, write authority
-has not transferred, and the curator must not accept the work. A child must never declare its work
-accepted, integrated, merged, or safe to ship. A child must never create, fork, or delegate to another
-thread or agent; it must request user authorization through the main thread if additional delegation
-appears necessary.
+All other work stays silent in the child thread. At a terminal result, the child must call
+`send_message_to_thread` to deliver its terminal report directly to its curator in the actual main
+thread named in the contract, and must confirm that the tool call succeeds before ending. Writing the
+report only in the child thread, leaving the result in a local log, posting a link to the main thread,
+or finishing without that successful tool delivery is a protocol violation: no valid handoff has
+occurred, write authority has not transferred, and the curator must not accept the work. A child must
+never declare its work accepted, integrated, merged, or safe to ship. A child must never create, fork,
+or delegate to another thread or agent; it must request user authorization through the main thread if
+additional delegation appears necessary.
 
 The terminal report must use the format from
 [references/implementation-brief.md](references/implementation-brief.md), include the main-thread
@@ -114,7 +115,10 @@ After each terminal child result, and before declaring the overall task complete
 5. Choose the correction owner using the rule below before issuing a verdict.
 6. After any correction or rework, repeat only the verification relevant to the changed surface,
    then record `ACCEPTED`, `FOCUSED_REWORK`, `REJECTED`, or `BLOCKED` in the main thread.
-7. Own final integration, cross-thread conflict resolution, and the final user-facing result.
+7. After recording each verdict and sending any required child-thread action, write an appropriate
+   user-facing update in the main chat. Do not duplicate the worker's evidence or acknowledge a
+   completed child.
+8. Own final integration, cross-thread conflict resolution, and the final user-facing result.
 
 Message a child thread only if a response is expected; never acknowledge a completed child.
 
@@ -153,7 +157,8 @@ to fill this check when the worker already supplied exact results. `BLOCKED` or 
 a pass. This is one combined cap of three items, not three items per category. Re-run the acceptance
 decision after any rework, then issue the
 final overall verdict: `ACCEPTED`, `FOCUSED_REWORK`, `REJECTED`, or `BLOCKED`. Do not declare
-success from the risk list alone.
+success from the risk list alone. Deliver the final overall verdict to the user in the main chat;
+never complete silently.
 
 ## Stop conditions
 
