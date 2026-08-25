@@ -11,8 +11,8 @@ inspect and integrate the result.
 This is thread orchestration, not a native subagent loop. The Luna worker has its own `threadId`,
 visible history, and separate entry in the Codex task list.
 
-The protocol activates only when the user gives the exact standalone instruction `SUBCULTURE`.
-Mentioning, reviewing, or translating the word does not activate it.
+Use the skill when the user asks to apply Subculture to project work. Discussing, reviewing, or
+translating the skill alone does not start a worker handoff.
 
 ## How the bridge works
 
@@ -54,6 +54,11 @@ The intended token shift looks like this:
 
 These figures are a planning scenario, not a measured benchmark, fixed ratio, or guarantee. The
 goal is to reduce Sol execution while retaining Sol control over quality-critical decisions.
+
+In my practical use, the Sol + Luna Max mode can consume roughly **3x the account-level token
+volume** of a Sol-only run. This is a personal planning estimate, not a benchmark or guarantee;
+task size, retries, context compaction, and model limits can change it. Subculture shifts execution
+to Luna Max, but it does not promise lower total account consumption.
 
 That control costs time. Complete contracts, separate task handoffs, code inspection, and stricter
 verification can make delivery substantially slower than direct single-agent execution.
@@ -152,7 +157,8 @@ the retired standalone brief dependency.
   list. An entry that appears only under a `Subagents` panel is not compliant.
 - Luna Max is the default implementation worker. Terra and other profiles remain optional, but
   architecture and final acceptance stay with Sol.
-- The exact activation word is `SUBCULTURE`.
+- Use the skill when Subculture is requested for project execution; discussing the skill itself does
+  not dispatch a worker.
 
 ## License
 

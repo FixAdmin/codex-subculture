@@ -1,15 +1,13 @@
 ---
 name: subculture
-description: Sol-mediated orchestration for parallel, first-class, user-visible Codex threads created with the app-level create_thread capability in the current project, never through internal subagents. Sol owns architecture, integration, and acceptance while Luna Max handles bounded implementation work. Activate only when the user explicitly invokes the exact standalone code word SUBCULTURE as an execution mode, not when merely quoting, discussing, translating, or reviewing it. The bundled references/implementation-brief.md contract is mandatory before every child-thread dispatch.
+description: Sol-mediated orchestration for parallel, first-class, user-visible Codex threads created with the app-level create_thread capability in the current project, never through internal subagents. Sol owns architecture, integration, and acceptance while Luna Max handles bounded implementation work. Activate whenever the user mentions this skill. The bundled references/implementation-brief.md contract is mandatory before every child-thread dispatch.
 ---
 
 # SUBCULTURE
 
-Use this skill only when the user explicitly activates the exact standalone code word
-**SUBCULTURE** as an instruction to execute project work. Mentioning the word while asking about,
-reviewing, translating, or editing this skill does not activate it. The main thread becomes the
-orchestrator and curator. Its responsibility is the finished, integrated result, not merely
-dispatching work.
+Use this skill whenever the user mentions it. Do not require a particular token, capitalization,
+spelling, or standalone format. The main thread becomes the orchestrator and curator. Its
+responsibility is the finished, integrated result, not merely dispatching work.
 
 ## Operating contract
 
@@ -115,12 +113,17 @@ After each terminal child result, and before declaring the overall task complete
 5. Choose the correction owner using the rule below before issuing a verdict.
 6. After any correction or rework, repeat only the verification relevant to the changed surface,
    then record `ACCEPTED`, `FOCUSED_REWORK`, `REJECTED`, or `BLOCKED` in the main thread.
-7. After recording each verdict and sending any required child-thread action, write an appropriate
-   user-facing update in the main chat. Do not duplicate the worker's evidence or acknowledge a
-   completed child.
-8. Own final integration, cross-thread conflict resolution, and the final user-facing result.
+7. After `ACCEPTED`, do not call `send_message_to_thread` or otherwise message that worker:
+   acceptance ends child-thread communication. Record the verdict and write the user-facing update
+   only in the main chat. Never send a worker `ACCEPTED`, thanks, a verdict, an evidence summary, or
+   any other terminal acknowledgement. If a worker response or action is still needed, issue
+   `FOCUSED_REWORK` or `BLOCKED` instead of `ACCEPTED`.
+8. After any other verdict, write an appropriate user-facing update in the main chat. Send a worker
+   a message only when it requests a response or action from that worker.
+9. Own final integration, cross-thread conflict resolution, and the final user-facing result.
 
-Message a child thread only if a response is expected; never acknowledge a completed child.
+Never message a completed worker unless a focused rework, unresolved blocker, or other concrete
+follow-up requires its response or action.
 
 Before issuing `FOCUSED_REWORK`, decide whether another worker cycle is proportionate:
 
